@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostBinding, HostListener, inject, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-control',
@@ -8,11 +8,20 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
   styleUrl: './control.component.css',
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'control'
+    class: 'control',
+    '(click)': 'onClick()',
   }
 })
 export class ControlComponent {
-  @Input({ required: true }) label!: string;
+  // alternative for host and event biding (old way):
+  // @HostBinding('class') className = 'control';
+  // @HostListener('click') onClick(){console.log('clicked!')};
 
-  
+  @Input({ required: true }) label!: string;
+  private el = inject(ElementRef);
+
+  onClick() {
+    console.log('clicked!');
+    console.log(this.el);
+  }
 }
