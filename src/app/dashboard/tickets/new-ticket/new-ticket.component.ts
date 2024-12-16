@@ -16,10 +16,21 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
 
   @Output() add = new EventEmitter<{ title: string, text: string }>;
 
-  onSubmit(title: string, ticketText: string) {
-    this.add.emit({ title: title, text: ticketText });
-    this.form?.nativeElement.reset(); //unwrap HTMLFormElement from ElementRef type
+  //two-way biding:
+  enteredTitle = '';
+  enteredText = '';
+
+  onSubmit() {
+    this.add.emit({ title: this.enteredTitle, text: this.enteredText });
+    this.enteredText = '';
+    this.enteredTitle = '';
   }
+
+  // onSubmit(title: string, ticketText: string) {
+  //   this.add.emit({ title: title, text: ticketText });
+  //   this.form?.nativeElement.reset(); //unwrap HTMLFormElement from ElementRef type
+  // }
+
 
   ngOnInit() {
     console.log('on init');
